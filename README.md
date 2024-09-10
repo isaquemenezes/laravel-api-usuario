@@ -35,6 +35,12 @@ npm run serve
 curl http://127.0.0.1:8000/api/users
 ```
 
+## Testes Unitários com PHPUnit
+```
+php artisan test
+
+```
+
 ### Tecnologias
 
 - **[via Cep](https://viacep.com.br/)**

@@ -18,11 +18,18 @@ class UserFactory extends Factory
     public function definition()
     {
         return [
-            'name' => $this->faker->name(),
+            'nome' => $this->faker->name(),
             'email' => $this->faker->unique()->safeEmail(),
-            'email_verified_at' => now(),
-            'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
-            'remember_token' => Str::random(10),
+            'cpf' => $this->generateCpf(),
+            'data_nascimento' => $this->faker->date(),
+            'telefone' => $this->generateCpf(),
+            'cep' => $this->faker->postcode(),
+            'estado' => $this->faker->state(),
+            'cidade' => $this->faker->city(),
+            'bairro' => $this->faker->word(),
+            'endereco' => $this->faker->streetAddress(),
+            'status' => $this->faker->randomElement(['ativo', 'inativo']),
+
         ];
     }
 
@@ -38,5 +45,25 @@ class UserFactory extends Factory
                 'email_verified_at' => null,
             ];
         });
+    }
+
+    private function generateCpf()
+    {
+        $cpf = '';
+        for ($i = 0; $i < 9; $i++) {
+            $cpf .= rand(0, 9);
+        }
+
+
+        for ($t = 9; $t < 11; $t++) {
+            $d = 0;
+            for ($c = 0; $c < $t; $c++) {
+                $d += $cpf[$c] * (($t + 1) - $c);
+            }
+            $d = ((10 * $d) % 11) % 10;
+            $cpf .= $d;
+        }
+
+        return $cpf;
     }
 }
