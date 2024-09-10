@@ -213,26 +213,7 @@ export default {
         }
       }
     },
-    /*
-
-    async submitUsuario() {
-
-      const response = await fetch(this.$apiRoute.usuarios.create, {
-        method: 'POST',
-        body: JSON.stringify(this.form),
-        headers: {
-          'Content-Type': 'application/json'
-        }
-      });
-      const data = await response.json();
-
-      if (response.ok) {
-        alert('Usuário criado com sucesso!');
-      } else {
-        alert('Erro ao criar o usuário.');
-      }
-    }
-      */
+   
       async submitUsuario() {
       try {
         const response = await fetch(this.$apiRoute.usuarios.create, {
@@ -281,26 +262,6 @@ export default {
   },
 
   mounted() {
-
-    // const userId = this.$route.params.id;
-    
-    // if (userId) {
-    //   try {
-    //     const response = await fetch(`${this.$apiRoute.usuarios.edit}/${userId}`);
-    //     // const response = await fetch(this.$apiRoute.usuarios.edit/${userId}`);
-    //     const data = await response.json();
-        
-    //     if (response.ok) {
-    //       this.form = data; // Preenche o formulário com os dados do usuário
-    //     } else {
-    //       this.mensagemErro = data.message || 'Erro ao carregar dados do usuário';
-    //     }
-    //   } catch (error) {
-    //     this.mensagemErro = 'Erro na requisição. Tente novamente.';
-    //     console.error('Erro ao carregar dados do usuário:', error);
-    //   }
-    // }
-
   },
 
 };

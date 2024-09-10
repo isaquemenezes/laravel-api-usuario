@@ -275,7 +275,7 @@
         },
 
         cancelar() {
-            this.$router.push({ name: 'Usuarios' }); // Substitua 'home' pelo nome da sua rota inicial ou URL
+            this.$router.push({ name: 'Usuarios' }); 
         }
 
     }

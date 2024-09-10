@@ -32,7 +32,7 @@ npm run serve
 
 4. Testar a Aplicação | navegador| Postman| Ferramenta como o curl:
 ```
-curl http://localhost:9501/pokemons
+curl http://127.0.0.1:8000/api/users
 ```
 
 ### Tecnologias

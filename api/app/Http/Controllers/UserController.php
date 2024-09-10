@@ -78,20 +78,16 @@ class UserController extends Controller
         $user->status = 'inativo';
         $user->save();
 
-        // $user->delete();
-
         return response()->json(null, 204);
     }
 
     public function allGerarPdf()
     {
-        // Obter os usuários
+
         $usuarios = User::all();
 
-        // Carregar a view HTML e passar os dados
         $pdf = PDF::loadView('usuarios_pdf', compact('usuarios'));
 
-        // Retornar o PDF como resposta da API
         return $pdf->download('users.pdf');
     }
 
@@ -99,7 +95,6 @@ class UserController extends Controller
     {
         $user = User::findOrFail($id);
 
-        // Carrega a view 'user_pdf' e passa os dados do usuário para a view
         $pdf = PDF::loadView('usuario_pdf', compact('user'));
 
         // Retorna o PDF como download
