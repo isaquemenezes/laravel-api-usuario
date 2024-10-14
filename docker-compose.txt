@@ -1,0 +1,82 @@
+version: "3.8"
+
+services:
+  # Serviço do Laravel (API PHP com NGINX) image project
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    working_dir: /var/www/
+    container_name: server-api
+    # environment:
+    #   DB_CONNECTION: pgsql
+    #   DB_HOST: 127.0.0.1
+    #   DB_PORT: 5432
+    #   DB_DATABASE: solucao
+    #   DB_USERNAME: postgres
+    #   DB_PASSWORD: naruto
+    volumes:
+      - ./api:/var/www
+    networks:
+      - app-network
+    # ports:
+    #   - "8000:80"
+    depends_on:
+      - database
+
+  # nginx
+  nginx:
+    image: nginx:alpine
+    ports:
+        - "8000:80"
+    volumes:
+        - ./:/var/www
+        - ./docker/nginx/:/etc/nginx/conf.d/ # Carrega a configuração do NGINX
+    networks:
+        - app-network
+
+  # Serviço do Vue.js (Frontend)
+  frontend:
+    build:
+      context: .
+      dockerfile: docker/vue/Dockerfile 
+    container_name: client-vuejs
+    networks:
+      - app-network
+    ports:
+      - "3000:80"
+    depends_on:
+      - app
+
+  # Serviço do banco de dados
+  database:
+    # image: mysql:8.0
+    # container_name: mysql-db
+    image: postgres:13
+    restart: unless-stopped
+    container_name: postgres-db
+    environment:
+            POSTGRES_DATABASE: ${DB_DATABASE:-solucao}
+            POSTGRES_ROOT_PASSWORD: ${DB_PASSWORD:-naruto}
+            POSTGRES_PASSWORD: ${DB_PASSWORD:-naruto}
+            POSTGRES_USER: ${DB_USERNAME:-postgres}
+    # environment:
+    #   POSTGRES_DB: solucao
+    #   POSTGRES_USER: postgres
+    #   POSTGRES_PASSWORD: naruto
+    volumes:
+      # - dbdata:/var/lib/mysql
+      - pgdata:/var/lib/postgresql/data
+    networks:
+      - app-network
+    ports:
+      # - "3306:3306"
+      - "5432:5432"
+
+volumes:
+  pgdata:
+
+networks:
+  app-network:
+    driver: bridge
